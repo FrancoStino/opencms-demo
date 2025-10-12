@@ -16,6 +16,7 @@ open http://localhost:8080/opencms/
 ```
 
 **Access URLs:**
+
 - **OpenCMS Frontend**: http://localhost:8080/opencms/
 - **OpenCMS Workplace**: http://localhost:8080/opencms/opencms/system/workplace/
 - **Default Credentials**: `Admin` / `admin`
@@ -61,12 +62,14 @@ docker-compose exec mariadb mysql -u root -p  # MySQL connection
 ## Services
 
 ### OpenCMS (Port 8080)
+
 - **Image**: `alkacon/opencms-docker:latest`
 - **URL**: http://localhost:8080/opencms/
 - **Workplace**: http://localhost:8080/opencms/opencms/system/workplace/
 - **Components**: workplace, demo
 
 ### MariaDB (Port 3306)
+
 - **Image**: `mariadb:11.4`
 - **Database**: `opencms`
 
@@ -79,11 +82,13 @@ docker-compose exec mariadb mysql -u root -p  # MySQL connection
 ## Environment Configuration
 
 Copy and customize the environment file:
+
 ```bash
 cp .env.example .env
 ```
 
 Key variables:
+
 - `DB_ROOT_PASSWORD`: Database root password
 - `DB_NAME`: OpenCMS database name
 - `DB_USER`: Database user for OpenCMS
@@ -93,6 +98,7 @@ Key variables:
 ## Data Persistence
 
 Docker volumes for data persistence:
+
 - `mariadb_data`: Database files
 - `opencms_webapps`: OpenCMS application files
 - `opencms_logs`: Tomcat/OpenCMS logs
@@ -100,6 +106,7 @@ Docker volumes for data persistence:
 ## Development
 
 This is a scaffolded environment ready for:
+
 - Custom OpenCMS module development (`modules/` directory)
 - Custom scripts and utilities (`scripts/` directory)
 - Source code development (`src/` directory)
