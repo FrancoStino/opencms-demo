@@ -1,0 +1,54 @@
+services:
+  mariadb:
+    image: mariadb:11.4
+    container_name: opencms_mariadb
+    restart: unless-stopped
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - opencms-network
+
+  opencms:
+    image: alkacon/opencms-docker:latest
+    container_name: opencms_app
+    restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    volumes:
+      - opencms_webapps:/usr/local/tomcat/webapps
+      - opencms_logs:/usr/local/tomcat/logs
+    environment:
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWD: ${DB_PASSWORD}
+      OPENCMS_COMPONENTS: workplace,demo
+      JAVA_OPTS: ${JAVA_OPTS}
+    networks:
+      - opencms-network
+
+volumes:
+  mariadb_data:
+  opencms_webapps:
+  opencms_logs:
+
+networks:
+  opencms-network:
+    driver: bridge

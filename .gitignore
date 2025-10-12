@@ -3,6 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .kotlin
+*.iml
 
 ### Eclipse ###
 .apt_generated
@@ -28,3 +29,24 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Docker ###
+.env
+.env.local
+docker-compose.override.yml
+
+### OpenCMS ###
+*.sql
+*.log
+
+### Backup files ###
+backup_*.sql
+
+### Temporary files ###
+tmp_*
+.tmp
+.gemini/
+gha-creds-*.json
+
+### Lando ###
+.lando.local.yml
