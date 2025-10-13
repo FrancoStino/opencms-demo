@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="OpenCmsPluginConfigurationData">
+    <option name="connectorServiceUrl" value="http://localhost/opencms/ideConnector" />
+    <option name="connectorUrl" value="http://localhost/opencms/system/modules/com.mediaworx.opencms.ideconnector/connector.jsp" />
+    <option name="defaultLocalVfsRoot" value="src/modules" />
+    <option name="ignoredFiles" value="\.gitignore&#10;\.svnignore&#10;\.cvsignore&#10;#SyncJob\.txt&#10;manifest\.xml&#10;desktop\.ini&#10;sass&#10;\.DS_Store" />
+    <option name="ignoredPaths" value="\.git&#10;\.svn&#10;\.cvs&#10;\.sass-cache" />
+    <option name="manifestRoot" value="src/main/manifest" />
+    <option name="moduleNamingScheme" value="com.davideladisa.opencms.${modulename}" />
+    <option name="moduleZipTargetFolderPath" value="target" />
+    <option name="openCmsPluginEnabled" value="true" />
+    <option name="password" value="admin" />
+    <option name="pluginConnectorEnabled" value="true" />
+    <option name="pluginConnectorServiceEnabled" value="true" />
+    <option name="pullMetadataEnabled" value="true" />
+    <option name="repository" value="http://localhost/opencms/" />
+    <option name="useMetaDateVariablesEnabled" value="true" />
+    <option name="username" value="Admin" />
+    <option name="webappRoot" value="$USER_HOME$/dockermount/opencms-docker-webapps/ROOT" />
+  </component>
+</project>
