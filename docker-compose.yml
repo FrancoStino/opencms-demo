@@ -1,0 +1,47 @@
+# Default build/run file for the OpenCms docker image.
+# The image uses Jetty and Java 21.
+# It connects to a MariaDB database, running as second container.
+# To persist data, volumes are defined. Adjust the mount points to your needs,
+# or remove the volumes if data should not be persisted.
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    init: true
+    #    restart: always
+    volumes:
+      - ~/dockermount/opencms-docker-mysql:/var/lib/mysql
+    environment:
+      - "MYSQL_ROOT_PASSWORD=secretDBpassword"
+  opencms:
+    image: alkacon/opencms-docker:19.0
+    container_name: opencms
+    #    build:
+    #      context: ./image
+    #      args:
+    #        SERVLET_CONTAINER: jetty
+    #        BASE_IMAGE: jetty:12-jdk21
+    init: true
+    #    restart: always
+    depends_on: [ "mariadb" ]
+    links:
+      - "mariadb:mysql"
+    ports:
+      - "80:8080"
+    volumes:
+      # Up to image 16.0: ~/dockermount/opencms-docker-webapps:/usr/local/tomcat/webapps
+      - ~/dockermount/opencms-docker-webapps:/container/webapps
+    command: [ "/root/wait-for.sh", "mysql:3306", "-t", "30", "--", "/root/opencms-run.sh" ]
+    environment:
+      - "GZIP=true"
+      - "TOMCAT_OPTS=-Xmx2g -Xms512m -server -XX:+UseConcMarkSweepGC"
+      - "ADMIN_PASSWD=admin"
+      - "DB_HOST=mysql"
+      - "DB_NAME=opencms"
+      - "DB_USER=opencms"
+      - "DB_PASSWD=opencms"
+      - "OPENCMS_COMPONENTS=workplace,demo"
+      - "WEBRESOURCES_CACHE_SIZE=200000"
+      - "DEBUG=true"
+      - "JSONAPI=true"
+      - "SERVER_URL=http://localhost"
